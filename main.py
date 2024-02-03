@@ -2,13 +2,13 @@ import json
 import utils
 
 from flask import Flask, request, send_file
-from selenium import webdriver
+import asyncio
 
 app = Flask(__name__)
-
-options = webdriver.FirefoxOptions()
-options.add_argument("--headless")
-driver = webdriver.Firefox(options=options)
+loop = asyncio.get_event_loop()
+# options = webdriver.FirefoxOptions()
+# options.add_argument("--headless")
+# driver = webdriver.Firefox(options=options)
 
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -30,9 +30,11 @@ def generate():
         return utils.error("Please include your code!")
 
     url = f"https://carbon.now.sh/?wc={str(window_controls).lower()}&wt={window_theme}&fm={font}&fs={font_size}px&l={lang}&t={theme}&pv={pv}px&ph={ph}px&es=2x&code={code}"
-    image = utils.screenshot(url, driver)
+    # image = utils.screenshot(url, driver)
+    image = loop.run_until_complete(utils.screenshot(url))
+
     return send_file(image), 200
 
 if __name__ == "__main__":
-    app.run(host="", port=5000, debug=False)
+    app.run(host="", port=5000, debug=True)
 
