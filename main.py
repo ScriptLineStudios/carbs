@@ -1,7 +1,7 @@
 import json
 import utils
 
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 import asyncio
 
 app = Flask(__name__)
@@ -9,6 +9,10 @@ loop = asyncio.get_event_loop()
 # options = webdriver.FirefoxOptions()
 # options.add_argument("--headless")
 # driver = webdriver.Firefox(options=options)
+
+@app.route("/")
+def home():
+    return render_template("test.html")
 
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -31,7 +35,7 @@ def generate():
 
     url = f"https://carbon.now.sh/?wc={str(window_controls).lower()}&wt={window_theme}&fm={font}&fs={font_size}px&l={lang}&t={theme}&pv={pv}px&ph={ph}px&es=2x&code={code}"
     # image = utils.screenshot(url, driver)
-    image = loop.run_until_complete(utils.screenshot(url))
+    image = utils.screenshot(url)
 
     return send_file(image), 200
 
