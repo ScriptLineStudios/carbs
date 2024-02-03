@@ -12,19 +12,20 @@ loop = asyncio.get_event_loop()
 
 @app.route("/")
 def home():
-    return render_template("test.html")
+    return render_template("index.html")
 
 @app.route("/generate", methods=["POST"])
 def generate():
-    code = request.form.get("code")
-    lang = request.form.get("lang")
-    theme = request.form.get("theme", "material")
-    pv = request.form.get("pv", 0)
-    ph = request.form.get("ph", 0)
-    font = request.form.get("font", "Hack")
-    font_size = request.form.get("font_size", 14)
-    window_theme = request.form.get("window_theme", "sharp")
-    window_controls = request.form.get("window_controls", True)
+    data = json.loads(request.data)
+    code = data.get("code")
+    lang = data.get("lang")
+    theme = data.get("theme", "material")
+    pv = data.get("pv", 0)
+    ph = data.get("ph", 0)
+    font = data.get("font", "Hack")
+    font_size = data.get("font_size", 14)
+    window_theme = data.get("window_theme", "sharp")
+    window_controls = data.get("window_controls", True)
     
     if not lang or utils.invalid_lang(lang):
         return utils.error("Please include a language!")

@@ -1,0 +1,32 @@
+<style>
+    code {
+        background-color: #eee;
+        border: 1px solid #999;
+        display: block;
+        padding: 10px;
+    }
+</style>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>
+            Carbs - A simple Carbon API.
+        </h1>
+        <h2>
+            Get started using one of the following:
+        </h2>
+        CuRL
+        <code>
+            curl -X POST http://carbs.us.to/generate -H 'Content-Type: application/json' -d '{"code": "print("hello world")", "lang": "python"}' -o code.png
+        </code>
+        <br>
+        Python
+        <code>
+            import requests
+            <br>
+            requests.post("http://carbs.us.to/generate", json={"font": "Anonymous Pro", "font_size": 20, "theme": "oceanic-next", "lang": "C", "code": "printf("hello world!")"}).content
+        </code>
+    </body>
+</html>
